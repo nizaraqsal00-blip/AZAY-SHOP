@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>azaySHOP · Top Up Diamond FF</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(145deg, #0a0c15 0%, #151a28 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border-radius: 35px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 30px rgba(255, 140, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .header h1 {
+            font-size: 40px;
+            font-weight: 800;
+            color: #0a0c15;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header p {
+            color: #1e2b3a;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Form ID */
+        .id-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .id-card label {
+            color: gold;
+            font-weight: 500;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a2f44;
+            border-radius: 40px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: gold;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn-check {
+            background: #2a2f44;
+            border: none;
+            border-radius: 40px;
+            padding: 0 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .btn-check:hover {
+            background: gold;
+            color: black;
+        }
+        
+        .server-select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a2f44;
+            border-radius: 40px;
+            padding: 16px 20px;
+            color: white;
+            outline: none;
+            margin-top: 10px;
+        }
+        
+        /* Info ID */
+        .id-info {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px dashed gold;
+            display: none;
+        }
+        
+        /* Produk Grid */
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 25px 0 15px;
+            padding-left: 15px;
+            border-left: 5px solid gold;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #2a2f44;
+            border-radius: 25px;
+            padding: 20px 12px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            border-color: gold;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+        
+        .product-card.selected {
+            border: 2px solid gold;
+            background: rgba(255, 215, 0, 0.05);
+        }
+        
+        .product-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .product-name {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .product-desc {
+            color: #aaa;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            color: gold;
+            font-weight: 800;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-select {
+            background: linear-gradient(145deg, #ffd700, #ffa500);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 0;
+            width: 100%;
+            color: black;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .btn-select:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+        }
+        
+        /* Panel Pembayaran */
+        .payment-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid gold;
+            border-radius: 30px;
+            padding: 25px;
+            margin: 25px 0;
+            display: none;
+        }
+        
+        .payment-title {
+            color: gold;
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .payment-detail {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+        
+        .detail-row.total {
+            border-top: 1px solid #2a2f44;
+            padding-top: 10px;
+            margin-top: 10px;
+            color: gold;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .qr-method {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 20px;
+        }
+        
+        .qr-method p {
+            color: gold;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .btn-generate-qr {
+            background: gold;
+            border: none;
+            border-radius: 40px;
+            padding: 18px 30px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .btn-generate-qr:hover {
+            background: #ffdb58;
+            transform: scale(1.02);
+        }
+        
+        .qr-note {
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .qr-note i {
+            color: gold;
+            font-style: normal;
+        }
+        
+        /* Modal QR */
+        .qr-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .qr-modal.active {
+            display: flex;
+        }
+        
+        .qr-box {
+            background: white;
+            padding: 30px;
+            border-radius: 40px;
+            text-align: center;
+            max-width: 90%;
+        }
+        
+        .qr-box h3 {
+            color: black;
+            margin-bottom: 15px;
+        }
+        
+        .qr-box img {
+            max-width: 100%;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .qr-instruction {
+            background: gold;
+            color: black;
+            padding: 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+        
+        .btn-close-qr {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin: 30px 0 10px;
+            padding-top: 20px;
+            border-top: 1px solid #2a2f44;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>azaySHOP</h1>
+            <p>🔥 Diamond Free Fire • Termurah • Instant</p>
+        </div>
+        
+        <!-- Input ID -->
+        <div class="id-card">
+            <label>🆔 Free Fire ID</label>
+            <div class="input-group">
+                <input type="text" id="ffId" placeholder="Masukkan ID kamu (contoh: 123456789)">
+                <button class="btn-check" onclick="checkId()">Cek</button>
+            </div>
+            
+            <select class="server-select" id="server">
+                <option value="asia">🌏 Asia (Indonesia, Singapura)</option>
+                <option value="europe">🌍 Europe</option>
+                <option value="america">🌎 America</option>
+                <option value="middleeast">🕌 Middle East</option>
+            </select>
+            
+            <div class="id-info" id="idInfo">
+                ✅ Nickname: <span id="nickname">-</span>
+            </div>
+        </div>
+        
+        <!-- Produk -->
+        <div class="section-title">💎 Pilih Diamond</div>
+        <div class="product-grid" id="productGrid">
+            <!-- Akan diisi JavaScript -->
+        </div>
+        
+        <!-- Panel Pembayaran -->
+        <div class="payment-panel" id="paymentPanel">
+            <div class="payment-title">🧾 Detail Pembayaran</div>
+            
+            <div class="payment-detail" id="paymentDetail">
+                <div class="detail-row">
+                    <span>ID Free Fire</span>
+                    <span id="detailId">-</span>
+                </div>
+                <div class="detail-row">
+                    <span>Server</span>
+                    <span id="detailServer">-</span>
+                </div>
+                <div class="detail-row">
+                    <span>Item</span>
+                    <span id="detailItem">-</span>
+                </div>
+                <div class="detail-row">
+                    <span>Harga</span>
+                    <span id="detailPrice">-</span>
+                </div>
+                <div class="detail-row total">
+                    <span>Total</span>
+                    <span id="detailTotal">-</span>
+                </div>
+            </div>
+            
+            <div class="qr-method">
+                <p>📱 QRIS - Google Lens</p>
+                <button class="btn-generate-qr" onclick="generateQR()">
+                    🔲 Generate QR Code
+                </button>
+                <div class="qr-note">
+                    <i>📸 Petunjuk:</i> Scan QR ini menggunakan <strong>Google Lens / Kamera HP</strong>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal QR -->
+        <div class="qr-modal" id="qrModal">
+            <div class="qr-box">
+                <h3>azaySHOP • QR Code</h3>
+                <div id="qrContainer">
+                    <!-- QR akan muncul di sini -->
+                </div>
+                <div class="qr-instruction">
+                    ⚡ SCAN QR INI DI GOOGLE LENS ⚡
+                </div>
+                <button class="btn-close-qr" onclick="closeQR()">Tutup</button>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © 2026 azaySHOP • Trusted since 2025 • All rights reserved
+        </div>
+    </div>
+    
+    <script>
+        // Data produk dengan harga baru
+        const products = [
+            { id: 1, name: '70 Diamond', emoji: '💎', desc: 'Bonus 5% (74 DM)', price: 1000 },
+            { id: 2, name: '140 Diamond', emoji: '💎💎', desc: 'Bonus 10% (154 DM)', price: 4000 },
+            { id: 3, name: '359 Diamond', emoji: '💎💎💎', desc: 'Bonus 15% (413 DM)', price: 5000 },
+            { id: 4, name: '450 Diamond', emoji: '💎💎💎💎', desc: 'Bonus 20% (540 DM)', price: 5500 },
+            { id: 5, name: '1780 Diamond', emoji: '👑', desc: 'Bonus 25% (2225 DM)', price: 9000 }
+        ];
+        
+        let selectedProduct = null;
+        let serverIP = '192.168.0.103:5000'; // Ganti dengan IP Termux lo
+        
+        // Render produk
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('onclick', `selectProduct(${product.id})`);
+                card.innerHTML = `
+                    <div class="product-emoji">${product.emoji}</div>
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-desc">${product.desc}</div>
+                    <div class="product-price">Rp ${product.price.toLocaleString()}</div>
+                    <button class="btn-select">Pilih</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // Pilih produk
+        window.selectProduct = function(productId) {
+            selectedProduct = products.find(p => p.id === productId);
+            
+            // Hapus class selected dari semua card
+            document.querySelectorAll('.product-card').forEach(c => {
+                c.classList.remove('selected');
+            });
+            
+            // Tambah class selected ke card yang dipilih
+            setTimeout(() => {
+                event.currentTarget.classList.add('selected');
+            }, 10);
+            
+            // Tampilkan panel pembayaran
+            document.getElementById('paymentPanel').style.display = 'block';
+            
+            // Update detail pembayaran
+            const ffId = document.getElementById('ffId').value || '-';
+            const server = document.getElementById('server').options[
+                document.getElementById('server').selectedIndex
+            ].text.split(' ')[1] || 'Asia';
+            
+            document.getElementById('detailId').textContent = ffId;
+            document.getElementById('detailServer').textContent = server;
+            document.getElementById('detailItem').textContent = selectedProduct.name;
+            document.getElementById('detailPrice').textContent = `Rp ${selectedProduct.price.toLocaleString()}`;
+            document.getElementById('detailTotal').textContent = `Rp ${selectedProduct.price.toLocaleString()}`;
+            
+            // Scroll ke payment panel
+            document.getElementById('paymentPanel').scrollIntoView({ behavior: 'smooth' });
+        };
+        
+        // Cek ID (simulasi)
+        window.checkId = function() {
+            const ffId = document.getElementById('ffId').value;
+            if (ffId) {
+                document.getElementById('idInfo').style.display = 'block';
+                // Simulasi random nickname
+                const names = ['GAMING_KING', 'DRAGON_SLAYER', 'FF_PROS', 'AZAY_GANS'];
+                document.getElementById('nickname').textContent = 
+                    names[Math.floor(Math.random() * names.length)] + Math.floor(Math.random() * 1000);
+            } else {
+                alert('Masukkan ID Free Fire dulu!');
+            }
+        };
+        
+        // Generate QR (konek ke server Termux)
+        window.generateQR = async function() {
+            if (!selectedProduct) {
+                alert('Pilih produk dulu, Bro!');
+                return;
+            }
+            
+            const ffId = document.getElementById('ffId').value;
+            if (!ffId) {
+                alert('Masukkan ID Free Fire dulu!');
+                return;
+            }
+            
+            try {
+                // Panggil server Termux
+                const response = await fetch(`http://${serverIP}/api/create-order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        diamonds: selectedProduct.name,
+                        price: selectedProduct.price,
+                        ff_id: ffId,
+                        server: document.getElementById('server').value
+                    })
+                });
+                
+                const data = await response.json();
+                
+                // Tampilkan QR di modal
+                document.getElementById('qrContainer').innerHTML = `
+                    <img src="http://${serverIP}/qr/${data.order_id}.png" style="width:250px; height:250px;">
+                `;
+                document.getElementById('qrModal').classList.add('active');
+                
+            } catch (error) {
+                alert('Gagal konek ke server Termux. Pastikan server jalan di ' + serverIP);
+                console.error(error);
+            }
+        };
+        
+        // Tutup QR modal
+        window.closeQR = function() {
+            document.getElementById('qrModal').classList.remove('active');
+        };
+        
+        // Inisialisasi
+        renderProducts();
+    </script>
+</body>
+</html>
