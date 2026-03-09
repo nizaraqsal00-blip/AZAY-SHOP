@@ -550,46 +550,62 @@
         };
         
         // Generate QR (konek ke server Termux)
-        window.generateQR = async function() {
-            if (!selectedProduct) {
-                alert('Pilih produk dulu, Bro!');
-                return;
-            }
-            
-            const ffId = document.getElementById('ffId').value;
-            if (!ffId) {
-                alert('Masukkan ID Free Fire dulu!');
-                return;
-            }
-            
-            try {
-                // Panggil server Termux
-                const response = await fetch(`http://${serverIP}/api/create-order`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        diamonds: selectedProduct.name,
-                        price: selectedProduct.price,
-                        ff_id: ffId,
-                        server: document.getElementById('server').value
-                    })
-                });
-                
-                const data = await response.json();
-                
-                // Tampilkan QR di modal
-                document.getElementById('qrContainer').innerHTML = `
-                    <img src="http://${serverIP}/qr/${data.order_id}.png" style="width:250px; height:250px;">
-                `;
-                document.getElementById('qrModal').classList.add('active');
-                
-            } catch (error) {
-                alert('Gagal konek ke server Termux. Pastikan server jalan di ' + serverIP);
-                console.error(error);
-            }
-        };
+       window.generateQR = async function() {
+    if (!selectedProduct) {
+        alert('Pilih produk dulu, Bro!');
+        return;
+    }
+    
+    const ffId = document.getElementById('ffId').value;
+    if (!ffId) {
+        alert('Masukkan ID Free Fire dulu!');
+        return;
+    }
+    
+    // Tampilkan loading
+    document.getElementById('qrContainer').innerHTML = '<p style="color:white;">⏳ Menghubungi server...</p>';
+    document.getElementById('qrModal').classList.add('active');
+    
+    try {
+        console.log('Mencoba konek ke:', `http://${serverIP}/api/create-order`);
         
-        // Tutup QR modal
+        const response = await fetch(`http://${serverIP}/api/create-order`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                diamonds: selectedProduct.name,
+                price: selectedProduct.price,
+                ff_id: ffId,
+                server: document.getElementById('server').value
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Response server:', data);
+        
+        if (data.success) {
+            // Tampilkan QR
+            document.getElementById('qrContainer').innerHTML = `
+                <img src="http://${serverIP}/qr/${data.order_id}.png" style="width:250px; height:250px; border:5px solid gold; border-radius:20px;">
+                <p style="color:gold; margin-top:10px;">Order ID: ${data.order_id}</p>
+            `;
+        } else {
+            throw new Error(data.error || 'Gagal generate QR');
+        }
+        
+    } catch (error) {
+        console.error('ERROR DETAIL:', error);
+        document.getElementById('qrContainer').innerHTML = `
+            <p style="color:#ff6b6b;">❌ Gagal: ${error.message}</p>
+            <p style="color:#aaa; font-size:12px;">Cek koneksi ke ${serverIP}</p>
+            <button onclick="closeQR()" style="background:gold; border:none; padding:10px 20px; border-radius:30px; margin-top:15px;">Tutup</button>
+        `;
+    }
+};tutup QR modal
         window.closeQR = function() {
             document.getElementById('qrModal').classList.remove('active');
         };
