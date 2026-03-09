@@ -609,19 +609,21 @@
         window.closeQR = function() {
             document.getElementById('qrModal').classList.remove('active');
       
-          };const products = [
-    { id: 1, name: '70 Diamond', emoji: '💎', desc: 'Bonus 5% (74 DM)', price: 1000 },
-    { id: 2, name: '140 Diamond', emoji: '💎💎', desc: 'Bonus 10% (154 DM)', price: 4000 },
-    { id: 3, name: '359 Diamond', emoji: '💎💎💎', desc: 'Bonus 15% (413 DM)', price: 5000 },
-    { id: 4, name: '450 Diamond', emoji: '💎💎💎💎', desc: 'Bonus 20% (540 DM)', price: 5500 },
-    { id: 5, name: '1780 Diamond', emoji: '👑', desc: 'Bonus 25% (2225 DM)', price: 9000 }
-];
+          };
         
         // Inisialisasi
         renderProducts();// Render produk
 function renderProducts() {
     const grid = document.getElementById('productGrid');
     if (!grid) return;
+
+    const products = [
+    { id: 1, name: '70 Diamond', emoji: '💎', desc: 'Bonus 5% (74 DM)', price: 1000 },
+    { id: 2, name: '140 Diamond', emoji: '💎💎', desc: 'Bonus 10% (154 DM)', price: 4000 },
+    { id: 3, name: '359 Diamond', emoji: '💎💎💎', desc: 'Bonus 15% (413 DM)', price: 5000 },
+    { id: 4, name: '450 Diamond', emoji: '💎💎💎💎', desc: 'Bonus 20% (540 DM)', price: 5500 },
+    { id: 5, name: '1780 Diamond', emoji: '👑', desc: 'Bonus 25% (2225 DM)', price: 9000 }
+];
     
     grid.innerHTML = '';
     
